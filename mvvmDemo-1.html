@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="app">
+		<h1>{{title}}</h1>
+	</div>
+	<script type="text/javascript">
+
+
+		window.onload = function(){
+			var model = {
+			};
+			
+			mv(model,'title','xin nian kuai le')
+			console.log(1,model)
+			function mv(obj,prop,value){
+				var h1 = document.querySelector('h1');
+				h1.innerHTML = value;
+				Object.defineProperty(obj,prop,{
+					enumerable:true,
+					configurable:false,
+					get:function(){
+						console.log('getter')
+						return value
+					},
+					set:function(nVal){
+						if(nVal != value){
+							value = nVal
+							console.log('setter')
+							h1.innerHTML = nVal;
+						}
+					}
+				})
+			}
+
+			setTimeout(()=>{
+				model.title = 'hi keen';
+				console.log(2,model)
+			},3000)
+
+		}
+	</script>
+</body>
+</html>

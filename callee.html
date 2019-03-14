@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+		//请实现一个fibonacci函数，要求其参数和返回值如下所示：
+/**
+ *@desc: fibonacci
+ *@param: count {Number}
+ *@return: result {Number} 第count个fibonacci值，计数从0开始
+  fibonacci数列为：[1, 1, 2, 3, 5, 8, 13, 21, 34 …]
+  则getNthFibonacci(0)返回值为1
+  则getNthFibonacci(4)返回值为5
+  */
+  function getNthFibonacci(count) {
+  	var count = parseInt(count);
+  	if(count <= 1 ) {
+  		return 1
+  	}else{
+  		return arguments.callee(count-1)+arguments.callee(count-2)
+  	}
+  }
+  console.log(getNthFibonacci(5))
+</script>
+</body>
+</html>
+

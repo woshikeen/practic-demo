@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>form submit</title>
+	<style type="text/css">
+	.info{
+		color: #ccc
+	}
+	.tips{
+		color: black;
+	}
+	.error{
+		color: red
+	}
+	.success{
+		color: green;
+	}
+</style>
+</head>
+<body>
+	<form action="doSave" type="post" onsubmit="doSave()">
+		username:<input type="text" name="username" value=""/>
+		<span class="info">请输入用户名</span></br>
+		password:<input type="password" name="password" value=""/><span class="info">请输入密码</span></br>
+		repass:<input type="password" name="repass" value=""/><span class="info">请确认密码</span></br>
+		email:<input type="text" name="email" value=""/><span class="info">请输入邮箱</span></br>
+		other:<input type="text" name="other" /><span class="info">请输入其他信息</span>
+	</form>
+
+	<script type="text/javascript">
+		function doSave(){
+
+		}
+
+		var getSp = function(obj){
+			if(obj.nextSibling.nodeName.toLowerCase() != "span"){
+				return arguments.callee(obj = obj.nextSibling)//js递归调用bug
+			}else{
+				return obj.nextSibling;
+			}
+		}
+
+
+		window.onload = function(){
+			var username = document.getElementsByName('username')[0];
+			var password = document.getElementsByName('password')[0];
+			var repass = document.getElementsByName('repass')[0];
+			var email = document.getElementsByName('email')[0];
+			var other = document.getElementsByName('other')[0];
+			
+			bindEvent(username,"用户长度在3-15个字符内","用户长度在3-15个字符内",function(val){
+				if(val != "" && val.length >= 3 && val.length <= 15 ){
+					return true;
+				}else{
+					return false;
+				}
+			});
+
+			bindEvent(password,"密码长度在3-15个字符内","密码长度在3-15个字符内",function(val){
+				if(val != "" && val.length >= 3 && val.length <= 15 ){
+					return true;
+				}else{
+					return false;
+				}
+			});
+
+			bindEvent(repass,"确认密码与密码必须一致","确认密码与密码必须一致",function(val){
+				if(val != "" && val == password.value){
+					return true;
+				}else{
+					return false;
+				}
+			});
+
+			bindEvent(email,"请输入邮箱","邮箱格式有误",function(val){
+				var reg =/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+				if(val != "" && reg.test(val)){
+					return true;
+				}else{
+					return false;
+				}
+			});
+
+			bindEvent(other,"请输入其他信息","长度在3-15个字符内",function(val){
+				if(val != "" && val.length >= 3 && val.length <= 15 ){
+					return true;
+				}else{
+					return false;
+				}
+			});
+
+			//绑定事件
+			function bindEvent(obj,tip,errorTip,fn){
+				var span = getSp(obj);
+				obj.onfocus = function(){
+					span.className = 'tips';
+					span.innerHTML = tip;
+				}
+
+				obj.onblur = function(){
+					if(fn(obj.value)){
+						span.className = 'success';
+						span.innerHTML = '输入正确';
+					}else{
+						span.className = 'error';
+						span.innerHTML = errorTip;	
+					}
+				}	
+			}
+		}
+	</script>
+</body>
+</html>
